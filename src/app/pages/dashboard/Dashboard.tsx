@@ -13,7 +13,7 @@ const Dashboard = () => {
             <Header />
             <div className="max-w-screen-xl mx-auto px-6 py-10">
                 {/* Welcome Section */}
-                <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
+                <div className=" p-6 rounded-xl shadow-lg    mb-8">
                     <h1 className="text-4xl font-bold text-gray-800 mb-2">Welcome, {user?.name}! 🎉</h1>
                     <p className="text-lg text-gray-600">Manage users — Add, Edit, or Remove users from your list with ease!</p>
                 </div>

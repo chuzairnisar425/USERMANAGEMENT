@@ -16,8 +16,8 @@ const Header: React.FC = () => {
             {false && <DemoBar />}
             <div className="flex justify-between bg-white border items-center px-4">
                 <div className=" h-12 flex items-center ">
-                    <div className="">{<SidebarToggler />}</div>
-                    <h2 className="font-semibold ml-2">User Management</h2>
+                    {/* <div className="">{<SidebarToggler />}</div> */}
+                    <h2 className="font-bold  ml-2">User Management</h2>
                     {/* Search Bar */}
                     <input type="text" placeholder="Search..." className="ml-4 border rounded-full px-4 py-2 w-64 bg-slate-50" />
                 </div>

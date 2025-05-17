@@ -28,9 +28,9 @@ const UserList = () => {
 
     return (
         <div className="overflow-x-auto px-6 pb-10">
-            <div className="overflow-hidden rounded-lg shadow-lg bg-white">
+            <div className="overflow-hidden rounded-lg shadow-lg ">
                 <table className="min-w-full border-collapse text-gray-700">
-                    <thead className="bg-gradient-to-r from-blue-100 to-blue-300 text-left text-lg text-gray-800">
+                    <thead className="bg-gradient-to-r from-blue-200 to-blue-500 text-left text-lg text-gray-800">
                         <tr>
                             <th className="py-3 px-6 text-center font-medium">#</th>
                             <th className="py-3 px-6 text-center font-medium">Name</th>
@@ -40,7 +40,7 @@ const UserList = () => {
                     </thead>
                     <tbody>
                         {users?.map((user: any, index: number) => (
-                            <tr key={user.id} className="hover:bg-gray-50 transition duration-200">
+                            <tr key={user.id} className="hover:bg-blue-200 transition duration-200">
                                 <td className="py-3 px-6 text-center">{index + 1}</td>
                                 <td className="py-3 px-6 text-center font-medium">{user.name}</td>
                                 <td className="py-3 px-6 text-center">{user.email}</td>

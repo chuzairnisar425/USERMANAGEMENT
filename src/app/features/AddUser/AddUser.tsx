@@ -36,7 +36,7 @@ const AddUser = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-green-50">
+        <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300">
             <Header />
 
             <div className="max-w-xl mx-auto mt-14 px-6">

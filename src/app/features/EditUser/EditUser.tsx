@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetUsersQuery, useUpdateUserMutation } from '../../services/userApi';
+import { useGetRoleByIdQuery, useUpdateUserMutation } from '../../services/userApi';
 
 const EditUser = () => {
     const { id } = useParams();
-    const { data: users, isLoading, error } = useGetUsersQuery();
-    const [updateUser] = useUpdateUserMutation();
     const navigate = useNavigate();
+    const { data: user, isLoading, error } = useGetRoleByIdQuery(id);
+    const [updateUser] = useUpdateUserMutation();
+
     const [formData, setFormData] = useState({ name: '', email: '' });
 
     useEffect(() => {
-        if (users && id) {
-            const user = users.find((user: any) => user.id === parseInt(id));
-            if (user) {
-                setFormData({ name: user.name, email: user.email });
-            }
+        if (user) {
+            setFormData({
+                name: user?.name || '',
+                email: user?.email || '',
+            });
         }
-    }, [users, id]);
+    }, [user]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,51 +29,51 @@ const EditUser = () => {
             await updateUser({ id: parseInt(id!), ...formData }).unwrap();
             navigate('/');
         } catch (err) {
-            console.error('Error updating user:', err);
-            alert('Something went wrong!');
+            console.error('Update failed:', err);
+            alert('Update failed. Please check your inputs.');
         }
     };
 
-    if (isLoading) return <p className="text-center text-gray-500">Loading...</p>;
-    if (error) return <p className="text-center text-red-500">Error loading user data</p>;
+    if (isLoading) return <p className="text-center text-gray-500">Loading user data...</p>;
+    if (error) return <p className="text-center text-red-500">Error fetching user data.</p>;
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100 p-6">
-            <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl p-8 border border-gray-200 animate-fadeIn">
-                <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Edit User</h2>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-200 p-6">
+            <div className="bg-white w-full max-w-2xl p-10 rounded-xl shadow-lg border border-blue-100 animate-fadeIn">
+                <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-8">Update User Info</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-gray-700 font-medium mb-2">Name</label>
+                        <label className="block text-gray-700 font-semibold mb-1">Name</label>
                         <input
                             type="text"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            placeholder="Enter full name"
+                            placeholder="Full name"
                             required
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 font-medium mb-2">Email</label>
+                        <label className="block text-gray-700 font-semibold mb-1">Email</label>
                         <input
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            placeholder="Enter email address"
+                            placeholder="Email address"
                             required
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         />
                     </div>
 
-                    <div className="flex justify-between mt-8">
-                        <button type="button" onClick={() => navigate('/')} className="w-1/2 mr-3 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition duration-300">
+                    <div className="flex justify-between gap-4 mt-8">
+                        <button type="button" onClick={() => navigate('/')} className="w-1/2 py-3 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition duration-300">
                             Cancel
                         </button>
-                        <button type="submit" className="w-1/2 ml-3 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition duration-300">
+                        <button type="submit" className="w-1/2 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300">
                             Save Changes
                         </button>
                     </div>

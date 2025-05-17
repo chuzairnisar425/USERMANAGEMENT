@@ -17,7 +17,7 @@ export const userApi = createApi({
         // ✅ Fetch all users
         getUsers: builder.query({
             query: () => 'users/list',
-            transformResponse: (response) => response.users, // Update here to access 'users' key
+            transformResponse: (response) => response.users,
             providesTags: ['User'],
         }),
 
@@ -41,7 +41,7 @@ export const userApi = createApi({
         updateUser: builder.mutation({
             query: ({ id, ...updatedUser }) => ({
                 url: `users/update/${id}`,
-                method: 'POST', // using POST because of Laravel's setup
+                method: 'POST',
                 body: updatedUser,
             }),
             invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
@@ -51,9 +51,14 @@ export const userApi = createApi({
         deleteUser: builder.mutation({
             query: (id) => ({
                 url: `users/delete/${id}`,
-                method: 'GET', // your Laravel route uses GET for deletion
+                method: 'GET',
             }),
             invalidatesTags: ['User'],
+        }),
+        // ✅ Get single user for editing
+        getRoleById: builder.query({
+            query: (id) => `roles/edit/${id}`,
+            providesTags: (result, error, id) => [{ type: 'User', id }],
         }),
 
         // ✅ Login
@@ -68,4 +73,12 @@ export const userApi = createApi({
 });
 
 // 👉 Export all hooks
-export const { useGetUsersQuery, useGetUserByIdQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation, useLoginMutation } = userApi;
+export const {
+    useGetUsersQuery,
+    useGetUserByIdQuery,
+    useGetRoleByIdQuery, // ← new hook
+    useAddUserMutation,
+    useUpdateUserMutation,
+    useDeleteUserMutation,
+    useLoginMutation,
+} = userApi;

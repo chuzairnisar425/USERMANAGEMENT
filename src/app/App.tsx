@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import store from './store';
 import { IRootState } from './store';
 import { toggleRTL, toggleTheme, toggleMenu, toggleLayout, toggleAnimation, toggleNavbar, toggleSemidark } from '../_theme/themeConfigSlice';
-import { ToastContainer } from 'react-toastify';
 
 function App({ children }: PropsWithChildren) {
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
@@ -21,7 +20,6 @@ function App({ children }: PropsWithChildren) {
 
     return (
         <>
-            <ToastContainer position="top-right" autoClose={3000} />
             <div
                 className={`${(store.getState().themeConfig.sidebar && 'toggle-sidebar') || ''} ${themeConfig.menu} ${themeConfig.layout} ${
                     themeConfig.rtlClass

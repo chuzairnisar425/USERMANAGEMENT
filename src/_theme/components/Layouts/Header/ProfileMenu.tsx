@@ -41,7 +41,7 @@ function ProfileMenu() {
             >
                 <span className="absolute -inset-1.5"></span>
                 <span className="sr-only">Open user menu</span>
-                <LazyImage src="/assets/images/user-dummy-img.jpg" className="h-8 w-8 rounded-full" alt="User" />
+                <LazyImage src="/public/assets/images/user-profile.jpeg" className="h-8 w-8 rounded-full" alt="User" />
             </button>
 
             <div
