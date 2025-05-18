@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../../_theme/components/Layouts/Header/Header';
 import { useAddUserMutation } from '../../services/userApi';
 
 const AddUser = () => {
@@ -37,9 +36,7 @@ const AddUser = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300">
-            <Header />
-
-            <div className="max-w-xl mx-auto mt-14 px-6">
+            <div className="max-w-xl mx-auto p-10  ">
                 <div className="bg-white rounded-3xl shadow-2xl p-10 border border-gray-100 transition-transform hover:scale-[1.01] duration-300 ease-in-out">
                     <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-8">🚀 Add New User</h2>
 

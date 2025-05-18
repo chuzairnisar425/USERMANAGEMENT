@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../../../_theme/components/Layouts/Header/Header';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import UserList from '../../features/components/UserList';
@@ -10,7 +9,6 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300">
-            <Header />
             <div className="max-w-screen-xl mx-auto px-6 py-10">
                 {/* Welcome Section */}
                 <div className=" p-6 rounded-xl shadow-lg    mb-8">

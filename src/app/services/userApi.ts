@@ -55,11 +55,6 @@ export const userApi = createApi({
             }),
             invalidatesTags: ['User'],
         }),
-        // ✅ Get single user for editing
-        getRoleById: builder.query({
-            query: (id) => `roles/edit/${id}`,
-            providesTags: (result, error, id) => [{ type: 'User', id }],
-        }),
 
         // ✅ Login
         login: builder.mutation({
@@ -73,12 +68,4 @@ export const userApi = createApi({
 });
 
 // 👉 Export all hooks
-export const {
-    useGetUsersQuery,
-    useGetUserByIdQuery,
-    useGetRoleByIdQuery, // ← new hook
-    useAddUserMutation,
-    useUpdateUserMutation,
-    useDeleteUserMutation,
-    useLoginMutation,
-} = userApi;
+export const { useGetUsersQuery, useGetUserByIdQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation, useLoginMutation } = userApi;

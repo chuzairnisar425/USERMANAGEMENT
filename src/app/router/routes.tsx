@@ -21,17 +21,17 @@ const routes = [
     {
         path: '/',
         element: <Dashboard />,
-        layout: 'blank',
+        layout: 'default',
     },
     {
         path: '/users/add',
         element: <AddUser />,
-        layout: 'blank',
+        layout: 'default',
     },
     {
         path: '/users/edit/:id', // Add the edit user route
         element: <EditUser />,
-        layout: 'blank',
+        layout: 'default',
     },
 ];
 
