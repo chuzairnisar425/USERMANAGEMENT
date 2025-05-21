@@ -14,26 +14,10 @@ const Dashboard = () => {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200">
             <div className="max-w-7xl mx-auto px-4 py-10">
                 {/* Welcome Card */}
-                <div className="bg-white/70 backdrop-blur-xl shadow-xl rounded-3xl p-10 text-center transition-all hover:shadow-2xl">
+                <div className="bg-white/70 backdrop-blur-xl shadow-xl rounded-3xl p-10 text-start transition-all hover:shadow-2xl">
                     <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-3 animate-fadeIn">Welcome, {user?.name || 'Admin'} 🎉</h1>
                     <p className="text-lg text-gray-700 mb-2">Your command center to manage users, roles, and insights!</p>
                 </div>
-
-                {/* Stat Cards */}
-                {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">
-                    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
-                        <h3 className="text-xl font-semibold text-blue-800">Total Users</h3>
-                        <p className="text-3xl mt-2 font-bold text-blue-600">1,250</p>
-                    </div>
-                    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
-                        <h3 className="text-xl font-semibold text-purple-800">Active Roles</h3>
-                        <p className="text-3xl mt-2 font-bold text-purple-600">12</p>
-                    </div>
-                    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition">
-                        <h3 className="text-xl font-semibold text-green-800">Online Admins</h3>
-                        <p className="text-3xl mt-2 font-bold text-green-600">4</p>
-                    </div>
-                </div> */}
 
                 {/* Actions */}
                 <div className="flex justify-end mt-10">

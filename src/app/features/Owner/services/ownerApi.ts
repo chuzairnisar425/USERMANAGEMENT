@@ -24,7 +24,7 @@ export const ownerApi = createApi({
         // ✅ Get owner by ID
         getOwnerById: builder.query({
             query: (id) => `owners/edit/${id}`,
-            providesTags: (result, error, id) => [{ type: 'Owner', id }],
+            providesTags: (id) => [{ type: 'Owner', id }],
         }),
 
         // ✅ Add owner
