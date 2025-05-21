@@ -1,7 +1,8 @@
 // EditUser.tsx:
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetUsersQuery, useUpdateUserMutation } from '../User/services/userApi';
+import { useGetUsersQuery, useUpdateUserMutation } from '../services/userApi';
+// import { useGetUsersQuery, useUpdateUserMutation } from '../User/services/userApi';
 
 const EditUser = () => {
     const { id } = useParams();
@@ -27,7 +28,7 @@ const EditUser = () => {
         e.preventDefault();
         try {
             await updateUser({ id: parseInt(id!), ...formData }).unwrap();
-            navigate('/');
+            navigate('/users/list');
         } catch (err) {
             console.error('Error updating user:', err);
             alert('Something went wrong!');
@@ -70,7 +71,11 @@ const EditUser = () => {
                     </div>
 
                     <div className="flex justify-between mt-8">
-                        <button type="button" onClick={() => navigate('/')} className="w-1/2 mr-3 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition duration-300">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/users/list')}
+                            className="w-1/2 mr-3 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition duration-300"
+                        >
                             Cancel
                         </button>
                         <button type="submit" className="w-1/2 ml-3 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition duration-300">

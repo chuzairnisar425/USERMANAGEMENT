@@ -13,11 +13,9 @@ import SidebarNavMenu from '../../modules/sidebar-menu/SideBarNavMenu';
 
 // Icons
 import IconDashboard from '../Icon/IconDashoard';
-import IconBook from '../Icon/IconBook';
+import IconMenuDashboard from '../Icon/Menu/IconMenuDashboard';
+//Auth
 import { useAuth } from '../../../app/context/authContext';
-
-// Auth
-// import { useAuth } from '../../../context/authContext';
 
 const Sidebar: FC = () => {
     const [currentMenu, setCurrentMenu] = useState('');
@@ -66,14 +64,22 @@ const Sidebar: FC = () => {
                             title: 'Dashboard',
                             path: '/',
                             Icon: IconDashboard,
-                            roles: ['admin', 'manager', 'user'], // visible to all
+                            roles: ['admin', 'manager', 'user'],
+                        },
+
+                        {
+                            title: 'Users',
+                            path: '/users/list',
+                            Icon: IconMenuDashboard,
+                            roles: ['admin'],
+                            permission: 'View User',
                         },
                         {
-                            title: 'Add User',
-                            path: '/users/add',
-                            Icon: IconBook,
-                            roles: ['admin'], // only admin
-                            permission: 'Add User',
+                            title: 'Owners',
+                            path: '/owners/list',
+                            Icon: IconMenuDashboard,
+                            roles: ['admin', 'manager'],
+                            permission: 'View Owner',
                         },
                     ].filter((item) => {
                         const roleCheck = item.roles ? item.roles.some((r: string) => hasRole(r)) : true;

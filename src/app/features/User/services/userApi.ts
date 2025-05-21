@@ -12,7 +12,7 @@ export const userApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ['User', 'Roles'], // Add 'Roles' tag if you want to invalidate or provide tags related to roles
+    tagTypes: ['User', 'Roles'],
     endpoints: (builder) => ({
         // ✅ Get all users
         getUsers: builder.query<User[], void>({
@@ -44,7 +44,7 @@ export const userApi = createApi({
                 method: 'POST',
                 body: updatedUser,
             }),
-            invalidatesTags: (result, error, { id }) => [
+            invalidatesTags: ({ id }) => [
                 { type: 'User', id },
                 { type: 'User', id: 'LIST' },
             ],
@@ -56,7 +56,7 @@ export const userApi = createApi({
                 url: `users/delete/${id}`,
                 method: 'GET',
             }),
-            invalidatesTags: (result, error, id) => [
+            invalidatesTags: (id) => [
                 { type: 'User', id },
                 { type: 'User', id: 'LIST' },
             ],
@@ -71,7 +71,7 @@ export const userApi = createApi({
             }),
         }),
 
-        // ✅ Get User Roles (the one you wanted to add)
+        // ✅ Get User Roles
         getUserRoles: builder.query({
             query: () => 'user/add',
             providesTags: ['Roles'], // if you want caching/invalidation by Roles tag
@@ -79,12 +79,4 @@ export const userApi = createApi({
     }),
 });
 
-export const {
-    useGetUsersQuery,
-    useGetUserByIdQuery,
-    useAddUserMutation,
-    useUpdateUserMutation,
-    useDeleteUserMutation,
-    useLoginMutation,
-    useGetUserRolesQuery, // <-- export this hook
-} = userApi;
+export const { useGetUsersQuery, useGetUserByIdQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation, useLoginMutation, useGetUserRolesQuery } = userApi;

@@ -35,7 +35,7 @@ const UserList = () => {
             <div className="w-full px-2 sm:px-4 md:px-6 pb-10">
                 <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
                     <Skeleton height={32} width={200} />
-                    <Skeleton height={40} width={120} />
+                    <Skeleton height={32} width={120} />
                 </div>
                 <div className="overflow-x-auto">
                     <div className="min-w-[600px] overflow-auto rounded-xl shadow-md border border-gray-200 bg-white">
@@ -84,7 +84,7 @@ const UserList = () => {
         <div className="w-full px-2 sm:px-4 md:px-6 pb-10">
             <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
                 <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-700">User Management</h2>
-                {hasPermission('user:create') && (
+                {hasPermission('add user') && (
                     <button
                         onClick={() => navigate('/users/add')}
                         className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 rounded-lg shadow transition duration-300 whitespace-nowrap"
