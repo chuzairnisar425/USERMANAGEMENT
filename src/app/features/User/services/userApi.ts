@@ -12,39 +12,42 @@ export const userApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ['User'],
+    tagTypes: ['User', 'Roles'], // Add 'Roles' tag if you want to invalidate or provide tags related to roles
     endpoints: (builder) => ({
-        // ✅ Fetch all users
-        getUsers: builder.query({
+        // ✅ Get all users
+        getUsers: builder.query<User[], void>({
             query: () => 'users/list',
-            transformResponse: (response) => response.users,
-            providesTags: ['User'],
+            transformResponse: (response: { users: User[] }) => response.users,
+            providesTags: (result) => (result ? [...result.map(({ id }) => ({ type: 'User' as const, id })), { type: 'User' as const, id: 'LIST' }] : [{ type: 'User' as const, id: 'LIST' }]),
         }),
 
-        // ✅ Get single user by ID
+        // ✅ Get user by ID
         getUserById: builder.query({
             query: (id) => `users/edit/${id}`,
             providesTags: (result, error, id) => [{ type: 'User', id }],
         }),
 
-        // ✅ Add new user
+        // ✅ Add user
         addUser: builder.mutation({
             query: (newUser) => ({
                 url: 'users/store',
                 method: 'POST',
                 body: newUser,
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: [{ type: 'User', id: 'LIST' }],
         }),
 
-        // ✅ Update existing user
+        // ✅ Update user
         updateUser: builder.mutation({
             query: ({ id, ...updatedUser }) => ({
                 url: `users/update/${id}`,
                 method: 'POST',
                 body: updatedUser,
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
+            invalidatesTags: (result, error, { id }) => [
+                { type: 'User', id },
+                { type: 'User', id: 'LIST' },
+            ],
         }),
 
         // ✅ Delete user
@@ -53,7 +56,10 @@ export const userApi = createApi({
                 url: `users/delete/${id}`,
                 method: 'GET',
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: (result, error, id) => [
+                { type: 'User', id },
+                { type: 'User', id: 'LIST' },
+            ],
         }),
 
         // ✅ Login
@@ -64,8 +70,21 @@ export const userApi = createApi({
                 body: credentials,
             }),
         }),
+
+        // ✅ Get User Roles (the one you wanted to add)
+        getUserRoles: builder.query({
+            query: () => 'user/add',
+            providesTags: ['Roles'], // if you want caching/invalidation by Roles tag
+        }),
     }),
 });
 
-// 👉 Export all hooks
-export const { useGetUsersQuery, useGetUserByIdQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation, useLoginMutation } = userApi;
+export const {
+    useGetUsersQuery,
+    useGetUserByIdQuery,
+    useAddUserMutation,
+    useUpdateUserMutation,
+    useDeleteUserMutation,
+    useLoginMutation,
+    useGetUserRolesQuery, // <-- export this hook
+} = userApi;

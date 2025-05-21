@@ -9,7 +9,7 @@ const UnAuthorized = () => {
     const dispatch = useDispatch();
     const navigate = useNavigateWithFrom();
     useEffect(() => {
-        dispatch(setPageTitle('Maintenance'));
+        dispatch(setPageTitle('Unauthorize'));
     });
     const isDark = useSelector((state: IRootState) => state.themeConfig.theme === 'dark' || state.themeConfig.isDarkMode);
 
@@ -33,9 +33,9 @@ const UnAuthorized = () => {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            navigate(null);
+                            navigate('/');
                         }}
-                        className="btn btn-gradient mx-auto !mt-7 w-max border-0 uppercase shadow-none"
+                        className="btn btn-primary mx-auto !mt-7 w-max border-0 uppercase shadow-none"
                     >
                         Home
                     </button>

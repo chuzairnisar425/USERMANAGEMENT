@@ -19,19 +19,10 @@ const Header: React.FC = () => {
                 <div className="flex justify-between items-center px-5 py-3 bg-white dark:bg-black border-b">
                     {/* Left Section: Logo + Title + Toggler */}
                     <div className="flex items-center space-x-4">
-                        {/* Logo */}
-                        <Link to="/" className="flex items-center">
-                            <img src="/assets/images/logo.svg" alt="logo" className="w-8" />
-                            <span className="text-2xl font-semibold ml-2 dark:text-white">AI Agent</span>
-                        </Link>
-
                         {/* Sidebar Toggler (hamburger) */}
                         <button type="button" className="p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:bg-white-light/90 dark:hover:bg-dark/60" onClick={() => dispatch(toggleSidebar())}>
                             <IconMenu className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                         </button>
-
-                        {/* Title */}
-                        <h2 className="font-bold text-lg dark:text-white ml-4">User Management</h2>
                     </div>
 
                     {/* Middle Section: Search */}

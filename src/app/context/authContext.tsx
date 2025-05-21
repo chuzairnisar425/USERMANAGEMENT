@@ -1,43 +1,67 @@
-// src/context/AuthContext.tsx
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-import React, { createContext, useContext, useState } from 'react';
-
-interface AuthContextType {
-    user: any;
-    token: string | null;
-    login: (data: { user: any; token: string }) => void;
-    logout: () => void;
+interface Permission {
+    id: number;
+    name: string;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+interface Role {
+    id: number;
+    name: string;
+    permissions: Permission[];
+}
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState(() => {
-        const savedUser = localStorage.getItem('user');
-        return savedUser ? JSON.parse(savedUser) : null;
-    });
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    role: string;
+    roles: Role[];
+}
 
-    const [token, setToken] = useState(() => localStorage.getItem('token'));
+interface AuthContextType {
+    token: string | null;
+    user: User | null;
+    login: (token: string, user: User) => void;
+    logout: () => void;
+    hasPermission: (permissionName: string) => boolean;
+}
 
-    const login = ({ user, token }: { user: any; token: string }) => {
-        setUser(user);
-        setToken(token);
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('token', token);
-    };
-
-    const logout = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        setUser(null);
-        setToken(null);
-    };
-
-    return <AuthContext.Provider value={{ user, token, login, logout }}>{children}</AuthContext.Provider>;
-};
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) throw new Error('useAuth must be used within AuthProvider');
     return context;
+};
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+    // Initialize state from localStorage (if present)
+    const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
+    const [user, setUser] = useState<User | null>(() => {
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
+
+    const login = (token: string, user: User) => {
+        setToken(token);
+        setUser(user);
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+    };
+
+    const logout = () => {
+        setToken(null);
+        setUser(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+    };
+
+    // Check permission from user's roles
+    const hasPermission = (permissionName: string) => {
+        if (!user) return false;
+        return user.roles.some((role) => role.permissions.some((perm) => perm.name.toLowerCase() === permissionName.toLowerCase()));
+    };
+
+    return <AuthContext.Provider value={{ token, user, login, logout, hasPermission }}>{children}</AuthContext.Provider>;
 };

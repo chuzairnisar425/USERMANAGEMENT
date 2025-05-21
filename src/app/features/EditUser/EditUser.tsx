@@ -1,7 +1,7 @@
 // EditUser.tsx:
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetUsersQuery, useUpdateUserMutation } from '../../services/userApi';
+import { useGetUsersQuery, useUpdateUserMutation } from '../User/services/userApi';
 
 const EditUser = () => {
     const { id } = useParams();

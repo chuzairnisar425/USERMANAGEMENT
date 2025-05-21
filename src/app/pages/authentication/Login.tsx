@@ -4,7 +4,7 @@ import loginImage from '../../../../public/assets/images/login.png';
 import IconMail from '../../../_theme/components/Icon/IconMail';
 import IconLock from '../../../_theme/components/Icon/IconLock';
 import { useAuth } from '../../context/authContext';
-import { useLoginMutation } from '../../services/userApi';
+import { useLoginMutation } from '../../features/User/services/userApi';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -13,27 +13,31 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
-
     const [loginUser, { isLoading }] = useLoginMutation();
-
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
+
         try {
             const response = await loginUser({ email, password }).unwrap();
             const { user, token } = response.data;
-            login({ user, token });
-            localStorage.setItem('token', token);
-            navigate('/');
+
+            // Set auth context
+            login(token, user);
+
+            // Delay navigation slightly to allow context state to propagate
+            setTimeout(() => {
+                navigate('/');
+            }, 50); // even 10ms is enough, 50ms is safe
         } catch (err) {
             setError(err?.data?.message || 'Login failed. Please try again.');
         }
     };
 
     return (
-        <div className=" flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
-            <div className="w-full min-h-screen  flex flex-col md:flex-row shadow-lg  overflow-hidden bg-white">
-                {/* Left Image */}
+        <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+            <div className="w-full min-h-screen flex flex-col md:flex-row shadow-lg overflow-hidden bg-white">
+                {/* Left Side Image */}
                 <div className="md:w-1/2 hidden md:flex items-center justify-center bg-blue-400 relative">
                     <img src={loginImage} alt="Login" className="w-full h-full object-contain opacity-90" />
                     <div className="absolute inset-0 bg-blue-500 bg-opacity-60 flex flex-col items-center justify-center text-white p-10">
@@ -42,8 +46,8 @@ const Login = () => {
                     </div>
                 </div>
 
-                {/* Right Form */}
-                <div className="md:w-1/2 w-full p-8 sm:p-12 bg-white">
+                {/* Right Side Login Form */}
+                <div className="md:w-1/2 w-full p-8 sm:p-12 bg-white flex flex-col justify-center">
                     <h2 className="text-3xl font-extrabold text-blue-700 mb-6 text-center">Sign In to Your Account</h2>
 
                     {error && <p className="text-red-500 mb-4 text-center font-medium">{error}</p>}
@@ -77,13 +81,13 @@ const Login = () => {
                             </div>
                         </div>
 
-                        {/* Submit Button */}
+                        {/* Login Button */}
                         <button type="submit" disabled={isLoading} className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-md">
                             {isLoading ? 'Logging in...' : 'Login'}
                         </button>
                     </form>
 
-                    {/* Optional: Add footer */}
+                    {/* Footer */}
                     <p className="mt-6 text-center text-sm text-gray-600">
                         Don’t have an account?{' '}
                         <a href="/register" className="text-blue-600 hover:underline font-medium">

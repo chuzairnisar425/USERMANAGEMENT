@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import ActionMenu from '../ui/buttons/ActionMenu';
 import { formatDate, isDateFormat, Record } from '../../utils/utils';
 import CrudModal, { CrudModalHandles } from '../ui/modals/crud-modal/CrudModal';
-import QrCodeAction from '../../../features/DiningTables/components/QrCodeAction';
+// import QrCodeAction from '../../../features/DiningTables/components/QrCodeAction';
 import NoDataFound from './NoDataFound';
 import CoulumnFilter from './CoulumnFilter';
 
@@ -311,7 +311,7 @@ const Table2 = (props: UsersTable) => {
             titleClassName: '!text-center',
             sortable: false,
             render: (v: any, index: number) => {
-                return <QrCodeAction value={v.tableNo} />;
+                return;
             },
         };
     }, [data, initialRecords]);

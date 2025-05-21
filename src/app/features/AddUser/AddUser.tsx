@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAddUserMutation } from '../../services/userApi';
+import { useAddUserMutation } from '../User/services/userApi';
 
 const AddUser = () => {
     const [userData, setUserData] = useState({ name: '', email: '', password: '' });
