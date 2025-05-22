@@ -85,15 +85,15 @@ const OwnerList = () => {
 
     return (
         <div className="max-w-7xl mx-auto p-6 mt-10 bg-white shadow-md rounded-lg">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center ">
                 <h2 className="text-2xl font-semibold text-gray-800">Owners List</h2>
                 <Link to="/owners/add" className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
                     <IconPlus className="mr-2" />
                     Add Owner
                 </Link>
             </div>
-
-            <div className="overflow-x-auto">
+            <p>Manage owners and their privileges</p>
+            <div className="overflow-x-auto mt-4">
                 <table className="w-full table-auto border-collapse">
                     <thead className="bg-gray-100">
                         <tr className="text-left">
@@ -116,14 +116,14 @@ const OwnerList = () => {
                                 <td className="px-4 py-2 border-b">{owner.company_name}</td>
                                 <td className="px-4 py-2 border-b">{owner.phone_numbers[0]?.number}</td>
                                 <td className="px-4 py-2 border-b text-center">
-                                    <div className="flex justify-center gap-2">
-                                        <Link to={`/owners/edit/${owner.id}`} className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md flex items-center gap-1 transition">
+                                    <div className="flex justify-center ">
+                                        <Link to={`/owners/edit/${owner.id}`} className=" text-blue-500  hover:text-blue-600  rounded-md flex items-center gap-1 transition">
                                             <IconEdit />
-                                            <span className="hidden sm:inline">Edit</span>
+                                            {/* <span className="hidden sm:inline">Edit</span> */}
                                         </Link>
-                                        <button onClick={() => handleDelete(owner.id)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center gap-1 transition">
+                                        <button onClick={() => handleDelete(owner.id)} className=" text-red-500 hover:text-red-600 px-3 py-1 rounded-md flex items-center gap-1 transition">
                                             <IconTrash />
-                                            <span className="hidden sm:inline">Delete</span>
+                                            {/* <span className="hidden sm:inline">Delete</span> */}
                                         </button>
                                     </div>
                                 </td>

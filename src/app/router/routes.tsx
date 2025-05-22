@@ -7,6 +7,7 @@ import EditOwner from '../features/Owner/forms/EditOwner';
 import OwnerList from '../features/Owner/OwnerList';
 import AddOwner from '../features/Owner/forms/AddOwner';
 import UserList from '../features/User/UserList';
+import Error404 from '../shared/components/ui/pages/Error404';
 
 // Lazy components
 const Login = lazy(() => import('../pages/authentication/Login'));
@@ -134,7 +135,6 @@ const ownerRoutes = [
     },
 ];
 
-// Combine all
 const routes = [
     ...publicRoutes,
     ...adminRoutes,
@@ -144,6 +144,11 @@ const routes = [
         element: route.element,
         layout: route.layout || 'default',
     })),
+    {
+        path: '*',
+        element: <Error404 />,
+        layout: 'blank',
+    },
 ];
 
 export { routes };

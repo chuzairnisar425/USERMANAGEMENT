@@ -37,12 +37,11 @@ export const userApi = createApi({
             invalidatesTags: [{ type: 'User', id: 'LIST' }],
         }),
 
-        // ✅ Update user
         updateUser: builder.mutation({
-            query: ({ id, ...updatedUser }) => ({
+            query: ({ id, formData }) => ({
                 url: `users/update/${id}`,
                 method: 'POST',
-                body: updatedUser,
+                body: formData, // This will be FormData, no need to set headers
             }),
             invalidatesTags: ({ id }) => [
                 { type: 'User', id },
@@ -71,9 +70,9 @@ export const userApi = createApi({
             }),
         }),
 
-        // ✅ Get User Roles
+        // ✅ Get User Roles (the one you wanted to add)
         getUserRoles: builder.query({
-            query: () => 'user/add',
+            query: () => 'roles/list',
             providesTags: ['Roles'], // if you want caching/invalidation by Roles tag
         }),
     }),

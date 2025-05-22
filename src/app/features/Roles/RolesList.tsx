@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useGetRolesQuery, useGetPermissionsQuery, useAddRoleMutation, useUpdateRoleMutation, useDeleteRoleMutation } from './services/rolesApi';
 import { toast } from 'react-toastify';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const RolesList = () => {
     const { data: rolesData, isLoading: rolesLoading, refetch } = useGetRolesQuery(null);
@@ -65,8 +67,26 @@ const RolesList = () => {
 
     if (rolesLoading || permsLoading) {
         return (
-            <div className="flex justify-center items-center min-h-[300px]">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
+            <div className="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md">
+                <Skeleton height={40} width={250} className="mb-6" />
+                <Skeleton height={50} className="mb-4" />
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+                    {[...Array(8)].map((_, i) => (
+                        <Skeleton key={i} height={40} />
+                    ))}
+                </div>
+                <Skeleton height={45} width={150} />
+                <div className="mt-10">
+                    <Skeleton height={30} width={180} className="mb-4" />
+                    <div className="grid md:grid-cols-2 gap-5">
+                        {[...Array(2)].map((_, i) => (
+                            <div key={i} className="p-5 border rounded-lg">
+                                <Skeleton height={25} width={150} className="mb-2" />
+                                <Skeleton count={2} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }

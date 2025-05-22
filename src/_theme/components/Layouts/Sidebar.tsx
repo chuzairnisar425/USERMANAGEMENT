@@ -13,8 +13,11 @@ import SidebarNavMenu from '../../modules/sidebar-menu/SideBarNavMenu';
 
 // Icons
 import IconDashboard from '../Icon/IconDashoard';
-import IconMenuDashboard from '../Icon/Menu/IconMenuDashboard';
-//Auth
+import IconUsers from '../Icon/IconUsers';
+import IconUser from '../Icon/IconUser';
+import IconMenuUsers from '../Icon/Menu/IconMenuUsers';
+
+// Auth
 import { useAuth } from '../../../app/context/authContext';
 
 const Sidebar: FC = () => {
@@ -51,7 +54,8 @@ const Sidebar: FC = () => {
     };
 
     const hasRole = (roleName: string): boolean => {
-        return user?.roles.some((role) => role.name.toLowerCase() === roleName.toLowerCase()) ?? false;
+        const roleMatched = user?.roles?.some((role) => role.name.toLowerCase() === roleName.toLowerCase()) ?? false;
+        return roleMatched;
     };
 
     const sidebarMenus = [
@@ -66,24 +70,33 @@ const Sidebar: FC = () => {
                             Icon: IconDashboard,
                             roles: ['admin', 'manager', 'user'],
                         },
-
                         {
-                            title: 'Users',
+                            title: 'Users Management',
                             path: '/users/list',
-                            Icon: IconMenuDashboard,
+                            Icon: IconUsers,
                             roles: ['admin'],
                             permission: 'View User',
                         },
                         {
-                            title: 'Owners',
+                            title: 'Owners Management',
                             path: '/owners/list',
-                            Icon: IconMenuDashboard,
+                            Icon: IconUser,
                             roles: ['admin', 'manager'],
                             permission: 'View Owner',
+                        },
+                        {
+                            title: 'Roles Management',
+                            path: '/roles/list',
+                            Icon: IconMenuUsers,
+                            roles: ['admin'],
+                            permission: 'View User',
                         },
                     ].filter((item) => {
                         const roleCheck = item.roles ? item.roles.some((r: string) => hasRole(r)) : true;
                         const permissionCheck = item.permission ? hasPermission(item.permission) : true;
+
+                        // console.log(`✅ Checking "${item.title}" => Role: ${roleCheck}, Permission: ${permissionCheck}`);
+
                         return roleCheck && permissionCheck;
                     }),
                 },

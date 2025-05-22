@@ -1,45 +1,60 @@
-// EditUser.tsx:
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetUsersQuery, useUpdateUserMutation } from '../services/userApi';
-// import { useGetUsersQuery, useUpdateUserMutation } from '../User/services/userApi';
+import { useGetUsersQuery, useUpdateUserMutation, useGetUserRolesQuery } from '../services/userApi';
 
 const EditUser = () => {
     const { id } = useParams();
-    const { data: users, isLoading, error } = useGetUsersQuery();
-    const [updateUser] = useUpdateUserMutation();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ name: '', email: '' });
+
+    const { data: users, isLoading, error } = useGetUsersQuery();
+    const { data: rolesData, isLoading: rolesLoading } = useGetUserRolesQuery(undefined);
+    const [updateUser] = useUpdateUserMutation();
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        role_id: '',
+    });
 
     useEffect(() => {
         if (users && id) {
             const user = users.find((user: any) => user.id === parseInt(id));
             if (user) {
-                setFormData({ name: user.name, email: user.email });
+                setFormData({
+                    name: user.name,
+                    email: user.email,
+                    role_id: user.roles[0]?.id || '', // pre-select current role
+                });
             }
         }
     }, [users, id]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         try {
-            await updateUser({ id: parseInt(id!), ...formData }).unwrap();
+            const formPayload = new FormData();
+            formPayload.append('name', formData.name);
+            formPayload.append('email', formData.email);
+            formPayload.append('role', formData.role_id); // match Postman field
+
+            await updateUser({ formData: formPayload }).unwrap();
             navigate('/users/list');
         } catch (err) {
-            console.error('Error updating user:', err);
-            alert('Something went wrong!');
+            console.error('Update failed:', err);
+            alert('Error while updating user.');
         }
     };
 
-    if (isLoading) return <p className="text-center text-gray-500">Loading...</p>;
+    if (isLoading || rolesLoading) return <p className="text-center text-gray-500">Loading...</p>;
     if (error) return <p className="text-center text-red-500">Error loading user data</p>;
 
     return (
-        <div className="min-h-screen flex items-center justify-center  bg-gradient-to-r from-blue-100 to-blue-300 p-6">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-blue-300 p-6">
             <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl p-8 border border-gray-200 animate-fadeIn">
                 <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Edit User</h2>
 
@@ -68,6 +83,26 @@ const EditUser = () => {
                             placeholder="Enter email address"
                             required
                         />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-700 font-medium mb-2">Role</label>
+                        <select
+                            name="role_id"
+                            value={formData.role_id}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            required
+                        >
+                            <option value="" disabled>
+                                Select Role
+                            </option>
+                            {rolesData?.roles?.map((role: any) => (
+                                <option key={role.id} value={role.id}>
+                                    {role.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className="flex justify-between mt-8">
