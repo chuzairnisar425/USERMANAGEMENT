@@ -94,6 +94,9 @@ const Sidebar: FC = () => {
                     ].filter((item) => {
                         const roleCheck = item.roles ? item.roles.some((r: string) => hasRole(r)) : true;
                         const permissionCheck = item.permission ? hasPermission(item.permission) : true;
+
+                        // console.log(`✅ Checking "${item.title}" => Role: ${roleCheck}, Permission: ${permissionCheck}`);
+
                         return roleCheck && permissionCheck;
                     }),
                 },

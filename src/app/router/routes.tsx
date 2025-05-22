@@ -3,17 +3,19 @@ import { lazy } from 'react';
 import PrivateRoute from './middlewares/PrivateRoute';
 import RoleProtectedRoute from './middlewares/RoleProtectedRoute';
 import UnAuthorized from '../shared/components/ui/pages/UnAuthorized';
-import EditOwner from '../features/Owner/forms/EditOwner';
-import OwnerList from '../features/Owner/OwnerList';
-import AddOwner from '../features/Owner/forms/AddOwner';
-import UserList from '../features/User/UserList';
+
 import Error404 from '../shared/components/ui/pages/Error404';
 
 // Lazy components
 const Login = lazy(() => import('../pages/authentication/Login'));
 const Dashboard = lazy(() => import('../pages/dashboard/Dashboard'));
+const UserList = lazy(() => import('../features/User/UserList'));
 const AddUser = lazy(() => import('../features/User/forms/AddUser'));
 const EditUser = lazy(() => import('../features/User/forms/EditUser'));
+const RolesList = lazy(() => import('../features/Roles/RolesList'));
+const OwnerList = lazy(() => import('../features/Owner/OwnerList'));
+const AddOwner = lazy(() => import('../features/Owner/forms/AddOwner'));
+const EditOwner = lazy(() => import('../features/Owner/forms/EditOwner'));
 
 // Admin routes
 const adminRoutes = [
@@ -111,6 +113,15 @@ const ownerRoutes = [
         element: (
             <RoleProtectedRoute allowedRoles={['admin', 'manager']} requiredPermission="View Owner">
                 <OwnerList />
+            </RoleProtectedRoute>
+        ),
+        layout: 'default',
+    },
+    {
+        path: '/roles/list',
+        element: (
+            <RoleProtectedRoute allowedRoles={['admin', 'manager']} requiredPermission="View Owner">
+                <RolesList />
             </RoleProtectedRoute>
         ),
         layout: 'default',
