@@ -23,7 +23,7 @@ export const rolesApi = createApi({
         // ✅ Get role by ID
         getRoleById: builder.query({
             query: (id) => `roles/edit/${id}`,
-            providesTags: (result, error, id) => [{ type: 'Roles', id }],
+            providesTags: (id) => [{ type: 'Roles', id }],
         }),
 
         // ✅ Delete role
@@ -32,7 +32,7 @@ export const rolesApi = createApi({
                 url: `roles/delete/${roleId}`,
                 method: 'GET',
             }),
-            invalidatesTags: (result, error, roleId) => [
+            invalidatesTags: (roleId) => [
                 { type: 'Roles', id: roleId },
                 { type: 'Roles', id: 'LIST' },
             ],
@@ -55,7 +55,7 @@ export const rolesApi = createApi({
                 method: 'POST',
                 body: formData,
             }),
-            invalidatesTags: (result, error, { roleId }) => [
+            invalidatesTags: ({ roleId }) => [
                 { type: 'Roles', id: roleId },
                 { type: 'Roles', id: 'LIST' },
             ],
@@ -69,13 +69,6 @@ export const rolesApi = createApi({
     }),
 });
 
-export const {
-    useGetRolesQuery,
-    useGetRoleByIdQuery, // ✅ Export the new hook here
-    useDeleteRoleMutation,
-    useAddRoleMutation,
-    useUpdateRoleMutation,
-    useGetPermissionsQuery,
-} = rolesApi;
+export const { useGetRolesQuery, useGetRoleByIdQuery, useDeleteRoleMutation, useAddRoleMutation, useUpdateRoleMutation, useGetPermissionsQuery } = rolesApi;
 
 export default rolesApi;

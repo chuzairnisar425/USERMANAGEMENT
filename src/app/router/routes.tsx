@@ -3,7 +3,6 @@ import { lazy } from 'react';
 import PrivateRoute from './middlewares/PrivateRoute';
 import RoleProtectedRoute from './middlewares/RoleProtectedRoute';
 import UnAuthorized from '../shared/components/ui/pages/UnAuthorized';
-
 import Error404 from '../shared/components/ui/pages/Error404';
 
 // Lazy components
@@ -16,6 +15,30 @@ const RolesList = lazy(() => import('../features/Roles/RolesList'));
 const OwnerList = lazy(() => import('../features/Owner/OwnerList'));
 const AddOwner = lazy(() => import('../features/Owner/forms/AddOwner'));
 const EditOwner = lazy(() => import('../features/Owner/forms/EditOwner'));
+
+// Auth + Default Routes
+const publicRoutes = [
+    {
+        path: '/login',
+        element: <Login />,
+        layout: 'blank',
+    },
+
+    {
+        path: '/',
+        element: (
+            <PrivateRoute>
+                <Dashboard />
+            </PrivateRoute>
+        ),
+        layout: 'default',
+    },
+    {
+        path: '/unauthorized',
+        element: <UnAuthorized />,
+        layout: 'blank',
+    },
+];
 
 // Admin routes
 const adminRoutes = [
@@ -47,32 +70,15 @@ const adminRoutes = [
         layout: 'default',
     },
 ];
-
-// Auth + Default Routes
-const publicRoutes = [
+const roleRoutes = [
     {
-        path: '/login',
-        element: <Login />,
-        layout: 'blank',
-    },
-    {
-        path: '/auth/login',
-        element: <Login />,
-        layout: 'blank',
-    },
-    {
-        path: '/',
+        path: '/roles/list',
         element: (
-            <PrivateRoute>
-                <Dashboard />
-            </PrivateRoute>
+            <RoleProtectedRoute allowedRoles={['admin', 'manager']} requiredPermission="View Owner">
+                <RolesList />
+            </RoleProtectedRoute>
         ),
         layout: 'default',
-    },
-    {
-        path: '/unauthorized',
-        element: <UnAuthorized />,
-        layout: 'blank',
     },
 ];
 
@@ -117,15 +123,7 @@ const ownerRoutes = [
         ),
         layout: 'default',
     },
-    {
-        path: '/roles/list',
-        element: (
-            <RoleProtectedRoute allowedRoles={['admin', 'manager']} requiredPermission="View Owner">
-                <RolesList />
-            </RoleProtectedRoute>
-        ),
-        layout: 'default',
-    },
+
     {
         path: '/owners/add',
         element: (
@@ -150,7 +148,8 @@ const routes = [
     ...publicRoutes,
     ...adminRoutes,
     ...ownerRoutes,
-    ...userRoutes.map((route) => ({
+    ...userRoutes,
+    ...roleRoutes.map((route) => ({
         path: route.path,
         element: route.element,
         layout: route.layout || 'default',

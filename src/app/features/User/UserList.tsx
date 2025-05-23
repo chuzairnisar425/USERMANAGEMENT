@@ -81,7 +81,7 @@ const UserList = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6 mt-10 bg-white shadow-md rounded-lg">
+        <div className="max-w-7xl mx-auto p-6  bg-white shadow-md rounded-lg">
             <div className="flex justify-between items-center ">
                 <h2 className="text-2xl font-semibold text-gray-800">Users List</h2>
                 {hasPermission('add user') && (

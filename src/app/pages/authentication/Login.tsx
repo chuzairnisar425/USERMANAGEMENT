@@ -48,7 +48,7 @@ const Login = () => {
 
                 {/* Right Side Login Form */}
                 <div className="md:w-1/2 w-full p-8 sm:p-12 bg-white flex flex-col justify-center">
-                    <h2 className="text-3xl font-extrabold text-blue-700 mb-6 text-center">Sign In to Your Account</h2>
+                    <h2 className="text-3xl font-extrabold text-blue-600 mb-6 text-center">Sign In to Your Account</h2>
 
                     {error && <p className="text-red-500 mb-4 text-center font-medium">{error}</p>}
 
@@ -82,18 +82,10 @@ const Login = () => {
                         </div>
 
                         {/* Login Button */}
-                        <button type="submit" disabled={isLoading} className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-md">
+                        <button type="submit" disabled={isLoading} className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition duration-300 shadow-md">
                             {isLoading ? 'Logging in...' : 'Login'}
                         </button>
                     </form>
-
-                    {/* Footer */}
-                    <p className="mt-6 text-center text-sm text-gray-600">
-                        Don’t have an account?{' '}
-                        <a href="/register" className="text-blue-600 hover:underline font-medium">
-                            Sign up
-                        </a>
-                    </p>
                 </div>
             </div>
         </div>

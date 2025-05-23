@@ -10,7 +10,7 @@ interface Props {
 const PrivateRoute = ({ children, permission }: Props) => {
     const { token, hasPermission } = useAuth();
 
-    if (!token) return <Navigate to="/auth/login" />;
+    if (!token) return <Navigate to="/login" />;
 
     if (permission && !hasPermission(permission)) {
         return <Navigate to="/unauthorized" />;

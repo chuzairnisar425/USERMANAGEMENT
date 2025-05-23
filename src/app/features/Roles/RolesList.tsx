@@ -92,7 +92,7 @@ const RolesList = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md">
+        <div className="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-md">
             <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-2">{editMode ? 'Edit Role' : 'Create New Role'}</h2>
 
             <form onSubmit={handleSubmit} className="space-y-5">

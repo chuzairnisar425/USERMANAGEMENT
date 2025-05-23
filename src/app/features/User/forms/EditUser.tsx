@@ -54,7 +54,7 @@ const EditUser = () => {
     if (error) return <p className="text-center text-red-500">Error loading user data</p>;
 
     return (
-        <div className="min-h-screen flex items-center justify-center  p-6">
+        <div className=" flex items-center justify-center  p-6">
             <div className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-10 transition-all duration-500 animate-fade-in border border-blue-100">
                 <h2 className="text-3xl font-extrabold text-center text-blue-500 mb-10">Edit User</h2>
 

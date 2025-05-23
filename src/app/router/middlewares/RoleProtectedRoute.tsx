@@ -4,13 +4,13 @@ import { useAuth } from '../../context/authContext';
 interface Props {
     children: JSX.Element;
     allowedRoles: string[];
-    requiredPermission?: string; // ✅ Renamed to match usage
+    requiredPermission?: string;
 }
 
 const RoleProtectedRoute = ({ children, allowedRoles, requiredPermission }: Props) => {
     const { token, user, hasPermission } = useAuth();
 
-    if (!token || !user) return <Navigate to="/auth/login" />;
+    if (!token || !user) return <Navigate to="/login" />;
 
     const hasRole = user.roles.some((roleObj) => allowedRoles.some((allowedRole) => allowedRole.toLowerCase() === roleObj.name.toLowerCase()));
 

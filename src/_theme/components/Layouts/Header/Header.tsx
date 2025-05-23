@@ -11,7 +11,6 @@ import themeConfig from '../../../theme.config';
 const Header: React.FC = () => {
     const dispatch = useDispatch();
     const sidebar = useSelector((state: IRootState) => state.themeConfig.sidebar);
-    const [isDemo, setIsDemo] = useState<boolean>(localStorage.getItem('demo') !== 'true');
 
     return (
         <header className={`z-40 ${themeConfig.semidark && themeConfig.menu === 'horizontal' ? 'dark' : ''}`}>
@@ -25,19 +24,10 @@ const Header: React.FC = () => {
                         </button>
                     </div>
 
-                    {/* Middle Section: Search */}
-                    <div className="flex-grow px-4">
-                        <input type="text" placeholder="Search..." className="w-full max-w-md px-4 py-2 rounded-full border bg-slate-50 dark:bg-gray-800 dark:text-white" />
-                    </div>
-
-                    {/* Right Section: Profile Menu */}
                     <div>
                         <ProfileMenu />
                     </div>
                 </div>
-
-                {/* Optional: DemoBar */}
-                {false && <DemoBar />}
             </div>
         </header>
     );

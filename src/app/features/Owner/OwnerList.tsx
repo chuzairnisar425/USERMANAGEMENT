@@ -84,7 +84,7 @@ const OwnerList = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6 mt-10 bg-white shadow-md rounded-lg">
+        <div className="max-w-7xl mx-auto p-6  bg-white shadow-md rounded-lg">
             <div className="flex justify-between items-center ">
                 <h2 className="text-2xl font-semibold text-gray-800">Owners List</h2>
                 <Link to="/owners/add" className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
