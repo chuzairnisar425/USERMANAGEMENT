@@ -9,7 +9,7 @@ type FormData = {
     email: string;
     company_name: string;
     address: string;
-    phone_numbers: string; // Comma separated input, will convert to array before sending
+    phone_numbers: string;
 };
 
 const AddOwner = () => {
@@ -24,15 +24,13 @@ const AddOwner = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            // Format phone_numbers to array of trimmed strings
             const payload = {
                 ...data,
                 phone_numbers: data.phone_numbers
                     .split(',')
                     .map((num) => num.trim())
-                    .filter(Boolean), // Remove empty strings if any
+                    .filter(Boolean),
             };
-
             await addOwner(payload).unwrap();
             toast.success('Owner added successfully!');
             navigate('/owners/list');
@@ -43,94 +41,93 @@ const AddOwner = () => {
     };
 
     return (
-        <div className="max-w-xl mx-auto mt-10 p-8 bg-white shadow-md rounded-lg">
-            <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Add New Owner</h2>
+        <div className="min-h-screenbg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 flex items-center justify-center px-4 py-12">
+            <div className="w-full max-w-2xl p-8 sm:p-12 rounded-3xl shadow-2xl backdrop-blur-lg border border-blue-100">
+                <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-8">Add New Owner 🧑‍💼</h2>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Name */}
-                <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                        Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        id="name"
-                        {...register('name', { required: 'Name is required' })}
-                        className={`w-full mt-1 px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                        placeholder="Enter full name"
-                    />
-                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
-                </div>
-
-                {/* Email */}
-                <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                        Email <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        id="email"
-                        type="email"
-                        {...register('email', {
-                            required: 'Email is required',
-                            pattern: {
-                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'Invalid email address',
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                    {/* Field Component */}
+                    {[
+                        {
+                            id: 'name',
+                            label: 'Name',
+                            type: 'text',
+                            placeholder: 'Enter full name',
+                            validation: { required: 'Name is required' },
+                        },
+                        {
+                            id: 'email',
+                            label: 'Email',
+                            type: 'email',
+                            placeholder: 'Enter email address',
+                            validation: {
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: 'Invalid email address',
+                                },
                             },
-                        })}
-                        className={`w-full mt-1 px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                        placeholder="Enter email address"
-                    />
-                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-                </div>
+                        },
+                        {
+                            id: 'company_name',
+                            label: 'Company Name',
+                            type: 'text',
+                            placeholder: 'Enter company name',
+                            validation: { required: 'Company name is required' },
+                        },
+                        {
+                            id: 'address',
+                            label: 'Address',
+                            type: 'text',
+                            placeholder: 'Enter address',
+                            validation: { required: 'Address is required' },
+                        },
+                        {
+                            id: 'phone_numbers',
+                            label: 'Phone Numbers',
+                            type: 'text',
+                            placeholder: 'Separate numbers with commas',
+                            validation: { required: 'Phone numbers are required' },
+                        },
+                    ].map(({ id, label, type, placeholder, validation }) => (
+                        <div key={id}>
+                            <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+                                {label} <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                id={id}
+                                type={type}
+                                {...register(id as keyof FormData, validation)}
+                                className={`w-full px-4 py-2 rounded-md border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                                    errors[id as keyof FormData] ? 'border-red-500' : 'border-gray-300 focus:border-blue-500'
+                                }`}
+                                placeholder={placeholder}
+                            />
+                            {errors[id as keyof FormData] && <p className="text-red-500 text-sm mt-1">{errors[id as keyof FormData]?.message as string}</p>}
+                        </div>
+                    ))}
 
-                {/* Company Name */}
-                <div>
-                    <label htmlFor="company_name" className="block text-sm font-medium text-gray-700">
-                        Company Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        id="company_name"
-                        {...register('company_name', { required: 'Company name is required' })}
-                        className={`w-full mt-1 px-4 py-2 border ${errors.company_name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                        placeholder="Enter company name"
-                    />
-                    {errors.company_name && <p className="text-red-500 text-sm mt-1">{errors.company_name.message}</p>}
-                </div>
-
-                {/* Address */}
-                <div>
-                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                        Address <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        id="address"
-                        {...register('address', { required: 'Address is required' })}
-                        className={`w-full mt-1 px-4 py-2 border ${errors.address ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                        placeholder="Enter address"
-                    />
-                    {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
-                </div>
-
-                {/* Phone Numbers */}
-                <div>
-                    <label htmlFor="phone_numbers" className="block text-sm font-medium text-gray-700">
-                        Phone Numbers <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        id="phone_numbers"
-                        {...register('phone_numbers', { required: 'Phone numbers are required' })}
-                        className={`w-full mt-1 px-4 py-2 border ${errors.phone_numbers ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                        placeholder="Enter phone numbers separated by commas"
-                    />
-                    {errors.phone_numbers && <p className="text-red-500 text-sm mt-1">{errors.phone_numbers.message}</p>}
-                </div>
-
-                {/* Submit Button */}
-                <div className="flex justify-end">
-                    <button type="submit" disabled={isSubmitting} className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300">
-                        {isSubmitting ? 'Adding...' : 'Add Owner'}
-                    </button>
-                </div>
-            </form>
+                    <div className="pt-4 flex justify-end">
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-md shadow-md font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 018 8z"></path>
+                                    </svg>
+                                    Adding...
+                                </>
+                            ) : (
+                                'Add Owner'
+                            )}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

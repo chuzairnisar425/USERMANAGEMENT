@@ -18,14 +18,14 @@ const Dashboard = () => {
         {
             label: 'Users',
             component: <UserList />,
-            roles: ['admin'],
+            roles: ['admin', 'user'],
             permission: 'View User',
         },
         {
             label: 'Roles',
             component: <RolesList />,
             roles: ['admin'],
-            permission: 'View User', // or 'View Roles' if different
+            permission: 'View User',
         },
         {
             label: 'Owners',
@@ -49,7 +49,7 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200">
-            <div className="max-w-7xl mx-auto px-4 py-10">
+            <div className="max-w-7xl mx-auto px-4 py-10 ">
                 {/* Welcome Message */}
                 <div className="bg-white/70 backdrop-blur-xl shadow-xl rounded-3xl p-10 transition-all hover:shadow-2xl">
                     <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-3 animate-fadeIn">Welcome, {user?.name || 'Admin'} 🎉</h1>

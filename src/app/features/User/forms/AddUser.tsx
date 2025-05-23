@@ -62,8 +62,8 @@ const AddUser = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-100 via-white to-blue-100 px-4">
-            <div className="w-full max-w-xl backdrop-blur-md bg-white/80 border border-gray-200 shadow-2xl rounded-3xl p-10">
+        <div className="flex justify-center items-center min-h-screen ">
+            <div className="w-full max-w-2xl backdrop-blur-md bg-white/80 border border-gray-200 shadow-2xl rounded-3xl p-10">
                 <h2 className="text-4xl font-bold text-center text-indigo-700 mb-6 tracking-tight">Create New User</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">

@@ -74,7 +74,7 @@ const Sidebar: FC = () => {
                             title: 'Users Management',
                             path: '/users/list',
                             Icon: IconUsers,
-                            roles: ['admin'],
+                            roles: ['admin', 'user'],
                             permission: 'View User',
                         },
                         {
