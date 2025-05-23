@@ -15,7 +15,7 @@ import SidebarNavMenu from '../../modules/sidebar-menu/SideBarNavMenu';
 import IconDashboard from '../Icon/IconDashoard';
 import IconUsers from '../Icon/IconUsers';
 import IconUser from '../Icon/IconUser';
-import IconMenuUsers from '../Icon/Menu/IconMenuUsers';
+import IconFilter from '../Icon/IconFilter';
 
 // Auth
 import { useAuth } from '../../../app/context/authContext';
@@ -87,7 +87,7 @@ const Sidebar: FC = () => {
                         {
                             title: 'Roles Management',
                             path: '/roles/list',
-                            Icon: IconMenuUsers,
+                            Icon: IconFilter,
                             roles: ['admin'],
                             permission: 'View User',
                         },

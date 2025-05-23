@@ -48,7 +48,11 @@ const Login = () => {
 
                 {/* Right Side Login Form */}
                 <div className="md:w-1/2 w-full p-8 sm:p-12 bg-white flex flex-col justify-center">
-                    <h2 className="text-3xl font-extrabold text-blue-600 mb-6 text-center">Sign In to Your Account</h2>
+                    {/* ✨ Beautiful Heading */}
+                    <div className="text-center mb-8 animate-fadeIn">
+                        <h1 className="text-4xl font-extrabold text-blue-700 tracking-tight drop-shadow-sm">User Management Portal</h1>
+                        <p className="text-gray-600 mt-2 text-lg">Sign in to access and manage your dashboard</p>
+                    </div>
 
                     {error && <p className="text-red-500 mb-4 text-center font-medium">{error}</p>}
 
